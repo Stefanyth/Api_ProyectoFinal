@@ -1,0 +1,35 @@
+<div class="editar-body">
+    <div class="editar-container">
+      <h2>Editar Gasto</h2>
+      <form (ngSubmit)="onSubmit()" class="form-container">
+        <div class="form-group">
+          <label for="type">Tipo:</label>
+          <input id="type" type="text" [(ngModel)]="form.type" name="type" required />
+        </div>
+        <div class="form-group">
+          <label for="amount">Precio:</label>
+          <input id="amount" type="number" [(ngModel)]="form.amount" name="amount" required />
+        </div>
+        <div class="form-group">
+          <label for="description">Descripcion:</label>
+          <textarea id="description" [(ngModel)]="form.description" name="description" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="expense_date">Fecha de expiracion:</label>
+          <input id="expense_date" type="date" [(ngModel)]="form.expense_date" name="expense_date" required />
+        </div>
+        <div class="form-group">
+          <label for="stock">Existencia:</label>
+          <select id="stock" [(ngModel)]="form.stock" name="stock">
+            <option [value]="1">Si</option>
+            <option [value]="0">No</option>
+          </select>
+        </div>
+        <div class="button-group">
+          <button type="submit" class="btn btn-primary">Guardar</button>
+          <button type="button" class="btn btn-secondary" (click)="goBack()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  

@@ -1,0 +1,47 @@
+<div class="verdatos-body">
+  <div class="verdatos-container">
+    <button class="back-button" (click)="goBack()">Regresar</button>
+    <h2>Ver Datos del Usuario</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>Tipo</th>
+          <th>Precio</th>
+          <th>Descripcion</th>
+          <th>Fecha de expiracion</th>
+          <th>Existencia</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let expense of paginatedExpenses">
+          <td>{{ expense.id }}</td>
+          <td>{{ expense.type }}</td>
+          <td>{{ expense.amount }}</td>
+          <td>{{ expense.description }}</td>
+          <td>{{ expense.expense_date }}</td>
+          <td>{{ expense.stock ? 'SI' : 'No' }}</td>
+          <td>
+            <button (click)="onEdit(expense.id)">Editar</button>
+            <button (click)="onDelete(expense.id)">Eliminar</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Paginación manual -->
+    <div class="pagination">
+      <button
+        *ngIf="currentPage > 1"
+        (click)="changePage(currentPage - 1)">
+        Anterior
+      </button>
+      <button
+        *ngIf="currentPage < (expenses.length / itemsPerPage)"
+        (click)="changePage(currentPage + 1)">
+        Siguiente
+      </button>
+    </div>
+  </div>
+</div>

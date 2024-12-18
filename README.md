@@ -1,5 +1,4 @@
-Documentación del Proyecto.
- 
+
 Estructura del Proyecto.
    
  Creamos el controlador de autenticación, y maneja la lógica de inicio de sesión para los usuarios.
@@ -48,14 +47,7 @@ Define los atributos que se pueden asignar masivamente (mass assignable). Esto s
 En este caso, los campos type, amount, description, expense_date, y stock son los atributos que se pueden llenar de manera masiva.
 Define el espacio de nombres del modelo (App\Models).
 
- 
-Importa las clases necesarias:
-Authenticatable: Proporciona funcionalidad para la autenticación de usuarios.
-HasFactory: Permite la creación de fábricas para generar instancias del modelo.
-Notifiable: Permite enviar notificaciones a los usuarios.
-HasApiTokens: Permite a los usuarios emitir tokens de API, generalmente usado con Laravel Sanctum.
-La clase User extiende Authenticatable, lo que la convierte en un modelo que puede ser autenticado.
-Usa los traits HasApiTokens, HasFactory y Notifiable para agregar funcionalidades específicas al modelo.
+
     
  Define los atributos que se pueden asignar masivamente (mass assignable). Esto significa que estos campos se pueden llenar automáticamente al crear o actualizar un registro en la base de datos. En este caso, se permiten los campos name, email, y password.
 Define los atributos que deben ser ocultos en las respuestas JSON. Esto es útil para no exponer la contraseña y el token de recuerdo cuando se convierte el modelo a un array o JSON.
@@ -66,17 +58,6 @@ Este método determina si el usuario está autorizado para realizar la solicitud
 En este caso, siempre devuelve true, lo que significa que cualquier usuario puede realizar esta solicitud sin restricciones. Si deseas implementar controles de acceso más específicos, puedes modificar este método para que devuelva true o false según las condiciones necesarias.
      ![SaveExpenseRequest](https://github.com/user-attachments/assets/8bb057d4-2b6e-4928-ae63-de961d2cabe9)
 
- Este método define las reglas de validación que se aplican a la solicitud. Devuelve un array con las reglas para cada uno de los campos que se esperan en la solicitud:
-type: Debe ser requerido y tener un máximo de 100 caracteres.
-amount: Debe ser requerido, ser numérico y tener un formato decimal con hasta 2 cifras decimales.
-description: Debe ser requerido.
-expense_date: Debe ser requerido y debe ser una fecha válida. stock: Debe ser requerido, ser entero y no puede ser menor que 0.
-Este código define una clase SaveUserRequest que extiende FormRequest de Laravel, y se utiliza para manejar la validación de las solicitudes relacionadas con la creación o actualización de usuarios.
-Define el espacio de nombres de la clase (App\Http\Requests), organizando las clases de solicitud de Laravel.
-La clase SaveUserRequest extiende FormRequest, lo que permite manejar la validación de los datos de entrada de manera estructurada y reutilizable.
-Este método determina si el usuario está autorizado para realizar la solicitud.
-En este caso, siempre devuelve true, lo que significa que cualquier usuario puede realizar esta solicitud sin restricciones. Si es necesario, puedes implementar controles de acceso más específicos aquí.
-   
   Define el espacio de nombres de la clase (Database\Factories), organizando las clases de fábrica en Laravel.
 La clase ExpenseFactory extiende Factory, lo que permite crear instancias del modelo Expense de manera fácil y conveniente.
 Define el modelo al que corresponde esta fábrica. En este caso, se asigna el modelo Expense. Esto indica que esta fábrica generará instancias de Expense.
@@ -101,18 +82,6 @@ password: Utiliza una contraseña hasheada. La contraseña por defecto es 'passw
    ![Expense](https://github.com/user-attachments/assets/265f8349-7960-4f52-8b1b-9ae027ec070a)
 
 
- MIGRACIONES.
-Se importan las clases necesarias para crear migraciones y definir la estructura de la base de datos:
-Migration: Clase base que se utiliza para definir migraciones.
-Blueprint: Clase que permite definir la estructura de la tabla.
-Schema: Clase que proporciona métodos para interactuar con la base de datos.
-Aquí se define una migración anónima que extiende la clase Migration.
-Este método se ejecuta cuando se aplica la migración. Aquí se define la creación de la tabla users con las siguientes columnas:
-id: Crea una columna de tipo bigint auto-incremental que sirve como clave primaria.
-name: Crea una columna de tipo string para almacenar el nombre del usuario.
-email: Crea una columna de tipo string para almacenar el correo electrónico del usuario, y se establece como unique, lo que significa que no puede haber dos usuarios con el mismo correo. email_verified_at: Crea una columna de tipo timestamp que es nullable (puede ser nula). Esta columna se utiliza para almacenar la fecha y hora en que el correo electrónico fue verificado. password: Crea una columna de tipo string para almacenar la contraseña del usuario. rememberToken: Crea una columna de tipo string para almacenar un token que se utiliza en la funcionalidad "recordarme" durante el inicio de sesión.
-timestamps: Crea automáticamente dos columnas, created_at y updated_at, que se actualizan automáticamente cuando se crea o se modifica un registro.
-  Este método se ejecuta cuando se revierte la migración. Aquí se elimina la tabla users si existe. Esto es útil para deshacer cambios en la base de datos.
  
  Este código define una migración en Laravel para crear la tabla password_reset_tokens en la base de datos.
 Se importan las clases necesarias para crear migraciones y definir la estructura de la base de datos:
@@ -138,114 +107,6 @@ queue: Crea una columna de tipo text para almacenar el nombre de la cola en la q
 payload: Crea una columna de tipo longText para almacenar los datos del trabajo que falló. exception: Crea una columna de tipo longText para almacenar los detalles de la excepción que ocurrió al fallar el trabajo.
 failed_at: Crea una columna de tipo timestamp que almacena la fecha y hora en que el trabajo falló. Se utiliza la fecha y hora actual por defecto con useCurrent().
   Este método se ejecuta cuando se revierte la migración. Aquí se elimina la tabla failed_jobs si existe. Esto es útil para deshacer cambios en la base de datos.
- 
- Este código define rutas para una aplicación Laravel, especificando qué controladores manejarán ciertas solicitudes HTTP.
-Se importan los controladores necesarios (AuthController, ExpenseController, UserController) y la clase Route que se utiliza para definir rutas en Laravel.
-Método: POST
-Ruta: /login
-Controlador: AuthController
-Método del Controlador: login
-Descripción: Esta ruta maneja la solicitud de inicio de sesión. Cuando se envía una solicitud POST a /login, se invoca el método login del AuthController.
-Ruta: /expenses
-Controlador: ExpenseController
-Descripción: Esta línea define un conjunto completo de rutas RESTful para el recurso expenses, que son manejadas por el ExpenseController. Las rutas generadas incluyen:
-GET /expenses: Lista todos los gastos.
-POST /expenses: Crea un nuevo gasto.
-GET /expenses/{expense}: Muestra un gasto específico.
-PUT/PATCH /expenses/{expense}: Actualiza un gasto específico.
-DELETE /expenses/{expense}: Elimina un gasto específico.
-Ruta: /users
-Controlador: UserController
-Descripción: Similar al anterior, esta línea define un conjunto completo de rutas RESTful para el recurso users, que son manejadas por el UserController. Las rutas generadas incluyen:
-GET /users: Lista todos los usuarios.
-POST /users: Crea un nuevo usuario.
-GET /users/{user}: Muestra un usuario específico.
-PUT/PATCH /users/{user}: Actualiza un usuario específico.
-DELETE /users/{user}: Elimina un usuario específico.
-  
- Se importa la fachada Broadcast que proporciona métodos para registrar canales de difusión. Canal: 'App.Models.User.{id}'
-Este es el nombre del canal. El {id} en la ruta del canal es un comodín que representa el ID del usuario.
-Callback de Autorización:
-Parámetros: $user y $id
-$user: El usuario autenticado que intenta escuchar el canal.
-$id: El ID extraído de la ruta del canal.
-Lógica: return (int) $user->id === (int) $id;
-La función de callback verifica si el ID del usuario autenticado ($user->id) coincide con el ID en la ruta del canal ($id). Si coinciden, se retorna true, permitiendo al usuario escuchar el canal. Si no coinciden, se retorna false, denegando el acceso.
-
 
 ![api](https://github.com/user-attachments/assets/18cecc41-d7e1-4cbd-b094-61557578ff41)
 
-
- 
- Frontend.
-Este código define un componente de Angular para un formulario de inicio de sesión. Component: Importa la clase Component para definir el componente.
-CommonModule: Importa el módulo CommonModule que proporciona directivas comunes de Angular.
-FormsModule: Importa el módulo FormsModule para trabajar con formularios.
-Router: Importa el servicio Router para la navegación.
-AuthService: Importa el servicio AuthService para manejar la autenticación.
-selector: Define el selector del componente (<app-login>).
-standalone: Indica que el componente es independiente.
-imports: Especifica los módulos que el componente necesita (CommonModule y FormsModule). templateUrl: La ruta al archivo HTML del componente.
-styleUrls: La ruta al archivo CSS del componente.
-form: Un objeto que almacena los valores del formulario (email y password). constructor: Inicializa el componente e inyecta el Router y AuthService.
-validateEmail: Valida el formato del correo electrónico utilizando una expresión regular. validatePassword: Verifica que la contraseña tenga al menos 6 caracteres.
-    ![login component](https://github.com/user-attachments/assets/d68616da-c6ea-4191-b2e5-e5a36bb8337d)
-
- onSubmit: Maneja el evento de envío del formulario:
-Previene el comportamiento por defecto del formulario.
-Valida el correo electrónico y la contraseña.
-Si las validaciones pasan, llama al método login del AuthService.
-Maneja la respuesta de la autenticación: redirige a /menu si es exitosa o muestra un error si falla.
-navigateToRegister: Maneja la navegación al formulario de registro: Previene el comportamiento por defecto del evento.
-Navega a la ruta /register.
-  ![login component2](https://github.com/user-attachments/assets/485fbf58-9ef5-4943-a6fa-7d4479a67309)
-
- Codigo html de la vista.
-Component: Importa la clase Component para definir el componente.
-CommonModule: Importa el módulo CommonModule que proporciona directivas comunes de Angular.
-RouterModule: Importa el módulo RouterModule para manejar la navegación dentro del componente.
-selector: Define el selector del componente (<app-menu>).
-standalone: Indica que el componente es independiente.
-imports: Especifica los módulos que el componente necesita (CommonModule y RouterModule).
-templateUrl: La ruta al archivo HTML del componente.
-styleUrls: La ruta al archivo CSS del componente.
-   ![menu component](https://github.com/user-attachments/assets/3835d1ce-ad02-4eed-8c91-3dc558ff5ed5)
-
- Propiedades:
-isUserMenuOpen: Almacena el estado del menú de usuario (abierto o cerrado). isEventMenuOpen: Almacena el estado del menú de eventos (abierto o cerrado).
-isMenuOpen: Almacena el estado general del menú (abierto o cerrado).
-Métodos:
-toggleUserMenu: Alterna el estado de isUserMenuOpen entre true y false, abriendo o cerrando el menú de usuario.
-toggleEventMenu: Alterna el estado de isEventMenuOpen entre true y false, abriendo o cerrando el menú de eventos.
-toggleMenu: Alterna el estado de isMenuOpen entre true y false, abriendo o cerrando el menú general.
-Vista del menu.
-  
- Component: Importa la clase Component para definir el componente.CommonModule: Importa el módulo CommonModule para usar directivas comunes de Angular.FormsModule: Importa el módulo FormsModule para trabajar con formularios.Router: Importa el servicio Router para la navegación.AuthService: Importa el servicio AuthService para manejar la lógica de autenticación y actualización de usuarios.
-form: Un objeto que almacena los valores del formulario (name y email). constructor: Inicializa el componente e inyecta los servicios Router y AuthService.
-onSubmit: Maneja el evento de envío del formulario:
-Obtiene el userId del localStorage.
-Verifica que userId no sea nulo.
-Llama al método updateUser del AuthService pasando el userId y los datos del formulario. Maneja la respuesta de la actualización:
-Si es exitosa, muestra un mensaje de éxito y redirige al menú. Si hay un error, muestra un mensaje de error apropiado.
-    ![menu component2](https://github.com/user-attachments/assets/de54172d-ab9e-402b-a902-e9fb6aa7cf19)
-
- Vista modificar usuario.
-Component: Importa la clase Component para definir el componente.
-CommonModule: Importa el módulo CommonModule para usar directivas comunes de Angular. FormsModule: Importa el módulo FormsModule para trabajar con formularios.
-Router: Importa el servicio Router para la navegación.
-AuthService: Importa el servicio AuthService para manejar la lógica de autenticación y registro de usuarios.
-form: Un objeto que almacena los valores del formulario (username, email, password y confirmPassword).
-constructor: Inicializa el componente e inyecta los servicios Router y AuthService.
-   
- validateEmail: Verifica que el correo electrónico tenga un formato válido.
-validatePassword: Verifica que la contraseña tenga al menos 6 caracteres.
-validateForm: Realiza todas las validaciones del formulario y muestra alertas si alguna de ellas falla.
-onSubmit: Maneja el evento de envío del formulario:
-Previene el comportamiento predeterminado del formulario. Verifica si el formulario es válido.
-Crea un objeto user con los datos del formulario.
-Llama al método register del AuthService para registrar al usuario. Maneja la respuesta del registro:
-Si es exitosa, muestra un mensaje de éxito y redirige al login.
-Si hay un error, muestra un mensaje de error.
-  
-![editar component](https://github.com/user-attachments/assets/817bfff6-6a45-4139-a0e0-12260f45b2a4)
-![editar component2](https://github.com/user-attachments/assets/bf7eb0ac-2f2c-45c5-8eb8-ee82a0c233a6)

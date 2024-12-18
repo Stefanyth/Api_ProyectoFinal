@@ -5,7 +5,10 @@ Estructura del Proyecto.
  Creamos el controlador de autenticación, y maneja la lógica de inicio de sesión para los usuarios.
 Este código define un controlador UserController en Laravel que maneja operaciones CRUD (Crear, Leer, Actualizar, Eliminar) para el modelo User.
 Obtiene todos los usuarios de la base de datos y devuelve una respuesta JSON con esos usuarios y un código de estado HTTP 200 (OK).
+
+  ![AuthController](https://github.com/user-attachments/assets/63498f4d-12f6-4c8b-bbb7-43ea0035ec3b)
   
+
  Crea un nuevo usuario con los datos validados de la solicitud.
 Devuelve una respuesta JSON con el usuario creado y un código de estado HTTP 201.
 Si ocurre una excepción, registra el error y devuelve una respuesta JSON con un mensaje de error y un código de estado HTTP 500 (Internal Server Error).
